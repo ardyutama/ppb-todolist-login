@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ppb_login_todolist.R;
 import com.example.ppb_login_todolist.utils.DatabaseHandler;
+import com.example.ppb_login_todolist.utils.NotificationToast;
 import com.example.ppb_login_todolist.utils.Session;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     DatabaseHandler databaseHandler;
     private Session session;
     SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +72,12 @@ public class LoginActivity extends AppCompatActivity {
         mViewPassword.setError(null);
         if(res == true){
             session.setLoggedin(true);
-            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            NotificationToast.showToast(LoginActivity.this,"Login Success");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("user",user);
             startActivity(intent);
         }else {
-            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            NotificationToast.showToast(LoginActivity.this,"Login Failed");
         }
     }
 }

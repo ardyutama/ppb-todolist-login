@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ppb_login_todolist.utils.DatabaseHandler;
 import com.example.ppb_login_todolist.R;
+import com.example.ppb_login_todolist.utils.NotificationToast;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -58,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
         else{
-            Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
+            NotificationToast.showToast(RegisterActivity.this,"Login Success");
             return false;
         }
     }

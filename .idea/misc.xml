@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/custom_email_icon.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/custom_input.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/custom_lock_icon.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/ic_baseline_email.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/ic_baseline_email_focused.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/ic_baseline_lock.xml" value="0.2109375" />
+        <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/drawable/ic_baseline_lock_focused.xml" value="0.2109375" />
         <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/layout/activity_login.xml" value="0.34375" />
         <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/layout/activity_main.xml" value="0.340625" />
         <entry key="..\:/Users/Hornet/AndroidStudioProjects/ppblogintodolist/app/src/main/res/layout/activity_register.xml" value="0.34375" />
@@ -11,7 +18,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8 (2)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
