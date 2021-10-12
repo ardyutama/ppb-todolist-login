@@ -51,47 +51,6 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         updateTaskListener(holder);
         deleteTaskListener(holder);
         checkBoxlistener(holder,item);
-
-//        holder.updateTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                editItem(holder.getAdapterPosition());
-//            }
-//        });
-//        holder.deleteTask.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//                builder.setTitle("Delete Task");
-//                builder.setMessage("Are you sure you want to delete this Task?");
-//                builder.setPositiveButton("Confirm",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                deleteItem(holder.getAdapterPosition());
-//                            }
-//                        });
-//                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        notifyItemChanged(holder.getAdapterPosition());
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//            }
-//        });
-//        holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if(isChecked){
-//                    db.updateStatus(item.getId(),1);
-//                }
-//                else{
-//                    db.updateStatus(item.getId(),0);
-//                }
-//            }
-//        });
     }
     @Override
     public int getItemCount(){

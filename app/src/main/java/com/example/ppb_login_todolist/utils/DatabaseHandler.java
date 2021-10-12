@@ -15,12 +15,13 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper{
 
     private static final int VERSION = 1;
-    private static final String NAME = "toDoListDatabase";
+    private static final String NAME = "toDoListLoginDatabase";
     private static final String TODO_TABLE = "todo";
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
-    public static final String database_name = "db_login";
+
+//    public static final String database_name = "db_login";
     public static final String table_name = "table_login";
 
     public static final String row_id = "_id";
@@ -32,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     public DatabaseHandler(Context context) {
         super(context, NAME, null, VERSION);
+        db= getWritableDatabase();
     }
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "

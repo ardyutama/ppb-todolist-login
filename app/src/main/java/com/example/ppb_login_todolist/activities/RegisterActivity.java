@@ -31,12 +31,11 @@ public class RegisterActivity extends AppCompatActivity {
         mViewPassword =findViewById(R.id.et_passwordSignup);
         mViewRepassword =findViewById(R.id.et_passwordSignup2);
 
-
         mViewRepassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    checkLogin();
+                    checkRegister();
                     return true;
                 }
                 return false;
@@ -46,13 +45,25 @@ public class RegisterActivity extends AppCompatActivity {
         findViewById(R.id.button_signupSignup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkLogin();
+                checkRegister();
             }
         });
     }
+    private boolean cekPassword(String password, String repassword){
+        return password.equals(repassword);
+    }
 
-    private void checkLogin(){
+    private boolean cekUser(String user){
+        if (databaseHandler.checkUser(user)){
+            return true;
+        }
+        else{
+            Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
+    private void checkRegister(){
         mViewUser.setError(null);
         mViewPassword.setError(null);
         mViewRepassword.setError(null);
@@ -95,17 +106,5 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean cekPassword(String password, String repassword){
-        return password.equals(repassword);
-    }
 
-    private boolean cekUser(String user){
-        if (databaseHandler.checkUser(user)){
-            return true;
-        }
-        else{
-            Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    }
 }
