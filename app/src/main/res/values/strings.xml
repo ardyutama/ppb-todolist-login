@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ppb-login-todolist</string>
+    <string name="todolist">todoList</string>
+    <string name="template">Ini adalah sebuah task</string>
+    <string name="save">save</string>
+    <string name="new_task">new_task</string>
+</resources>
