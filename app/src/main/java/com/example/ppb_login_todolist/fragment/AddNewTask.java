@@ -21,6 +21,7 @@ import com.example.ppb_login_todolist.DialogCloseListener;
 import com.example.ppb_login_todolist.models.ToDoModel;
 import com.example.ppb_login_todolist.R;
 import com.example.ppb_login_todolist.utils.DatabaseHandler;
+import com.example.ppb_login_todolist.utils.Session;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Objects;
@@ -31,7 +32,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
     private Button newTaskSaveButton;
 
     private DatabaseHandler db;
-
+    int usersID;
+    Session session;
     public static AddNewTask newInstance() {
         return new AddNewTask();
     }
@@ -40,6 +42,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
+        session = new Session(getActivity().getApplicationContext());
     }
 
     @Override
@@ -97,6 +100,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         newTaskSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                usersID = session.prefs.getInt("user",0);
                 String text = newTaskText.getText().toString();
                 if(finalIsUpdate){
                     db.updateTask(bundle.getInt("id"), text);
@@ -105,6 +109,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     ToDoModel task = new ToDoModel();
                     task.setTask(text);
                     task.setStatus(0);
+                    task.setUser_id(usersID);
                     db.insertTask(task);
                 }
                 dismiss();

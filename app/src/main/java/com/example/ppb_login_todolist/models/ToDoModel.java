@@ -3,7 +3,7 @@ package com.example.ppb_login_todolist.models;
 public class ToDoModel {
     private int id,status;
     private String task;
-
+    private int user_id;
     public int getId() {
         return id;
     }
@@ -26,5 +26,13 @@ public class ToDoModel {
 
     public void setTask(String task) {
         this.task = task;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 }

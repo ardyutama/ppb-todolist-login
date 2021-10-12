@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,14 +19,14 @@ import com.example.ppb_login_todolist.R;
 import com.example.ppb_login_todolist.utils.DatabaseHandler;
 import com.example.ppb_login_todolist.utils.NotificationToast;
 import com.example.ppb_login_todolist.utils.Session;
+import com.example.ppb_login_todolist.utils.UsersDatabaseHandler;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mViewUser, mViewPassword;
-    DatabaseHandler databaseHandler;
+    UsersDatabaseHandler usersDatabaseHandler;
     private Session session;
     SharedPreferences sharedPreferences;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences.contains("username");
         mViewUser=findViewById(R.id.et_emailSignin);
         mViewPassword =findViewById(R.id.et_passwordSignin);
-        databaseHandler = new DatabaseHandler(this);
+        usersDatabaseHandler = new UsersDatabaseHandler(this);
 
         mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -67,11 +68,14 @@ public class LoginActivity extends AppCompatActivity {
     private void validationLogin(){
         String user = mViewUser.getText().toString();
         String password = mViewPassword.getText().toString();
-        Boolean res = databaseHandler.checkUser(user,password);
+        Boolean res = usersDatabaseHandler.checkUser(user,password);
+        int userID = usersDatabaseHandler.getIdUser(user,password);
         mViewUser.setError(null);
         mViewPassword.setError(null);
         if(res == true){
             session.setLoggedin(true);
+            session.editor.putInt("user",userID);
+            session.editor.apply();
             NotificationToast.showToast(LoginActivity.this,"Login Success");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("user",user);

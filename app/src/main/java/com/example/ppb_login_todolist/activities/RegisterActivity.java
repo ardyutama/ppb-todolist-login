@@ -4,6 +4,7 @@ import android.content.ContentValues;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,20 +14,21 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ppb_login_todolist.utils.DatabaseHandler;
 import com.example.ppb_login_todolist.R;
 import com.example.ppb_login_todolist.utils.NotificationToast;
+import com.example.ppb_login_todolist.utils.UsersDatabaseHandler;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText mViewUser, mViewPassword, mViewRepassword;
-    DatabaseHandler databaseHandler;
+
+    UsersDatabaseHandler usersDatabaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        databaseHandler = new DatabaseHandler(this);
+        usersDatabaseHandler = new UsersDatabaseHandler(this);
 
         mViewUser =findViewById(R.id.et_emailSignup);
         mViewPassword =findViewById(R.id.et_passwordSignup);
@@ -55,11 +57,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean cekUser(String user){
-        if (databaseHandler.checkUser(user)){
+        if (usersDatabaseHandler.checkUser(user)){
             return true;
         }
         else{
-            NotificationToast.showToast(RegisterActivity.this,"Login Success");
+            NotificationToast.showToast(RegisterActivity.this,"Register Success");
             return false;
         }
     }
@@ -100,9 +102,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (cancel){
             fokus.requestFocus();
         }else{
-            values.put(DatabaseHandler.row_username, user);
-            values.put(DatabaseHandler.row_password, password);
-            databaseHandler.insertData(values);
+            values.put(usersDatabaseHandler.row_username, user);
+            values.put(usersDatabaseHandler.row_password, password);
+            usersDatabaseHandler.insertData(values);
             finish();
         }
     }

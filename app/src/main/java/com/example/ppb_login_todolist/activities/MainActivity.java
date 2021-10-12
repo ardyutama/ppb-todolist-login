@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private List<ToDoModel> taskList;
     private DatabaseHandler db;
     private Session session;
+    int usersID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksAdapter = new ToDoAdapter(db,this);
         tasksRecyclerView.setAdapter(tasksAdapter);
-
+        usersID = session.prefs.getInt("user",0);
         fab= findViewById(R.id.fab);
-        taskList = db.getAllTasks();
+        taskList = db.getAllTasks(usersID);
         Collections.reverse(taskList);
         tasksAdapter.setTasks(taskList);
         findViewById(R.id.button_logoutMain).setOnClickListener(new View.OnClickListener() {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     @Override
     public void handleDialogClose(DialogInterface dialog) {
-        taskList = db.getAllTasks();
+        taskList = db.getAllTasks(usersID);
         Collections.reverse(taskList);
         tasksAdapter.setTasks(taskList);
         tasksAdapter.notifyDataSetChanged();

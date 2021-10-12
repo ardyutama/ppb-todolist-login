@@ -14,19 +14,15 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper{
 
-    private static final int VERSION = 1;
+    private static final int VERSION = 6;
     private static final String NAME = "toDoListLoginDatabase";
     private static final String TODO_TABLE = "todo";
     private static final String ID = "id";
     private static final String TASK = "task";
     private static final String STATUS = "status";
+    private static final String USERID = "users_id";
 
 //    public static final String database_name = "db_login";
-    public static final String table_name = "table_login";
-
-    public static final String row_id = "_id";
-    public static final String row_username = "Username";
-    public static final String row_password = "Password";
 
     private SQLiteDatabase db;
 
@@ -36,18 +32,16 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         db= getWritableDatabase();
     }
     public void onCreate(SQLiteDatabase db) {
-        final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "
-                + STATUS + " INTEGER)";
-        String query = "CREATE TABLE " + table_name + "(" + row_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + row_username + " TEXT," + row_password + " TEXT)";
+        final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID +
+                " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK + " TEXT, "
+                + STATUS + " INTEGER, " + USERID + " INTEGER, FOREIGN KEY " + " (" + USERID + ") " +
+                "REFERENCES " + TODO_TABLE + " (" + ID + "));";
         db.execSQL(CREATE_TODO_TABLE);
-        db.execSQL(query);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + table_name);
         // Create tables again
         onCreate(db);
     }
@@ -58,15 +52,17 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         ContentValues cv = new ContentValues();
         cv.put(TASK, task.getTask());
         cv.put(STATUS, 0);
+        cv.put(USERID,task.getUser_id());
         db.insert(TODO_TABLE, null, cv);
     }
     @SuppressLint("Range")
-    public List<ToDoModel> getAllTasks(){
+    public List<ToDoModel> getAllTasks(int usersID){
         List<ToDoModel> taskList = new ArrayList<>();
         Cursor cur = null;
+        String selectQuery = "SELECT * FROM " + TODO_TABLE + " WHERE " + USERID + "=" + usersID;
         db.beginTransaction();
         try{
-            cur = db.query(TODO_TABLE, null, null, null, null, null, null, null);
+            cur = db.rawQuery(selectQuery,null);
             if(cur != null){
                 if(cur.moveToFirst()){
                     do{
@@ -74,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
                         task.setId(cur.getInt(cur.getColumnIndex(ID)));
                         task.setTask(cur.getString(cur.getColumnIndex(TASK)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+
                         taskList.add(task);
                     }
                     while(cur.moveToNext());
@@ -102,45 +99,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     public void deleteTask(int id){
         db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
-    }
-
-
-    //Insert Data
-    public void insertData(ContentValues values){
-        db.insert(table_name, null, values);
-    }
-
-
-    public boolean checkUser(String username, String password){
-        String[] columns = {row_id};
-        SQLiteDatabase db = getReadableDatabase();
-        String selection = row_username + "=?" + " and " + row_password + "=?";
-        String[] selectionArgs = {username,password};
-        Cursor cursor = db.query(table_name, columns, selection, selectionArgs, null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-        db.close();
-
-        if (count>0)
-            return true;
-        else
-            return false;
-    }
-
-    public boolean checkUser(String username){
-        String[] columns = {row_id};
-        SQLiteDatabase db = getReadableDatabase();
-        String selection = row_username + "=?" ;
-        String[] selectionArgs = {username};
-        Cursor cursor = db.query(table_name, columns, selection, selectionArgs, null, null, null);
-        int count = cursor.getCount();
-        cursor.close();
-//        db.close();
-
-        if (count>0)
-            return true;
-        else
-            return false;
     }
 
 }
