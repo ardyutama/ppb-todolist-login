@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ppb_login_todolist.DBHelper.DBHelper;
 import com.example.ppb_login_todolist.R;
+import com.example.ppb_login_todolist.utils.DatabaseHandler;
 import com.example.ppb_login_todolist.utils.Session;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mViewUser, mViewPassword;
-    DBHelper dbHelper;
+    DatabaseHandler databaseHandler;
     private Session session;
     SharedPreferences sharedPreferences;
 
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences.contains("username");
         mViewUser=findViewById(R.id.et_emailSignin);
         mViewPassword =findViewById(R.id.et_passwordSignin);
-        dbHelper = new DBHelper(this);
+        databaseHandler = new DatabaseHandler(this);
 
         mViewPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validationLogin(){
         String user = mViewUser.getText().toString();
         String password = mViewPassword.getText().toString();
-        Boolean res = dbHelper.checkUser(user,password);
+        Boolean res = databaseHandler.checkUser(user,password);
         mViewUser.setError(null);
         mViewPassword.setError(null);
         if(res == true){

@@ -13,19 +13,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ppb_login_todolist.DBHelper.DBHelper;
+import com.example.ppb_login_todolist.utils.DatabaseHandler;
 import com.example.ppb_login_todolist.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText mViewUser, mViewPassword, mViewRepassword;
-    DBHelper dbHelper;
+    DatabaseHandler databaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        dbHelper = new DBHelper(this);
+        databaseHandler = new DatabaseHandler(this);
 
         mViewUser =findViewById(R.id.et_emailSignup);
         mViewPassword =findViewById(R.id.et_passwordSignup);
@@ -88,9 +88,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (cancel){
             fokus.requestFocus();
         }else{
-            values.put(DBHelper.row_username, user);
-            values.put(DBHelper.row_password, password);
-            dbHelper.insertData(values);
+            values.put(DatabaseHandler.row_username, user);
+            values.put(DatabaseHandler.row_password, password);
+            databaseHandler.insertData(values);
             finish();
         }
     }
@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean cekUser(String user){
-        if (dbHelper.checkUser(user)){
+        if (databaseHandler.checkUser(user)){
             return true;
         }
         else{
